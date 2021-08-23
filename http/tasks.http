@@ -15,7 +15,7 @@ Content-Type: application/json
 GET http://localhost:3000/tasks
 
 ### Actualizar tarea
-PUT http://localhost:3300/tasks/1
+PUT http://localhost:3000/tasks/4
 Content-Type: application/json
 
 {
@@ -24,7 +24,7 @@ Content-Type: application/json
 }
 
 ### Actualizar estado de una tarea
-PUT http://localhost:3300/tasks/1?status=PENDING
+PUT http://localhost:3000/tasks/2?status=PENDING
 Content-Type: application/json
 
 {
@@ -33,4 +33,4 @@ Content-Type: application/json
 }
 
 ### Eliminar una tarea
-DELETE http://localhost:3300/tasks/1
+DELETE http://localhost:3000/tasks/3

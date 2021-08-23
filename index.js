@@ -33,19 +33,28 @@ app.get('/tasks/:tasksId', (req, res) => {
     res.json(tasks[tas]);
     
 });
+app.put('/tasks/:taskId', jsonParser, function (req, res) {
+  const status = req.query.status;
+  var idTask = parseInt(req.params.idTask);
+  var tas = [];
+    if (status != "") {
+        tas.push(req.body);
+        tasks.find(function (pos, index) {
+        pos.title = req.body.title;
+        pos.detail = req.body.detail;
+        pos.status = status;
+        res.send("Se cambio la tarea");
+        });
 
-app.put('/tasks/:taskId', jsonParser, function(req, res) {
-    var idTask = parseInt(req.params.idTask);
-    var tas = tasks.findIndex( aux => aux.idTask === idTask);
-    const status = req.query.status; 
-    if (status) {
-        tasks[tas].status = status;
-        res.send("Su status ha cambiado");
+
     } else {
-        tasks[tas].title = req.body.title;
-        tasks[tas].detail = req.body.detail;
-        count=tas+1;
-        res.send("Su status ha cambiado");
+        tas.push(req.body);
+        tasks.find(function(pos,index) {
+        pos.title = req.body.title;
+        pos.detail = req.body.detail;
+        res.send("Se cambio la tarea");
+            
+        });
     }
 });
 
