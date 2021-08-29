@@ -16,10 +16,11 @@ app.get("/", (req, res, next) => {
 });
 
 app.post("/tasks", jsonParser, (req, res, next) => {
-    req.body.id = tasks.length + 1;
+    count++;
+    req.body.id = count;
     tasks.push(req.body);
     console.log(req.body);
-    res.send("OK");
+    res.send(req.body);
 });
 
 app.get("/tasks", (req, res, next) => {
@@ -35,33 +36,38 @@ app.get('/tasks/:tasksId', (req, res) => {
 });
 app.put('/tasks/:taskId', jsonParser, function (req, res) {
   const status = req.query.status;
-  var idTask = parseInt(req.params.idTask);
+  var idTask = parseInt(req.params.taskId);
   var tas = [];
     if (status != "") {
-        tas.push(req.body);
-        tasks.find(function (pos, index) {
-        pos.title = req.body.title;
-        pos.detail = req.body.detail;
-        pos.status = status;
-        res.send("Se cambio la tarea");
+        tasks.forEach(function(value,index,array){
+            if(value.id==idTask){
+                value.title = req.body.title;
+                value.detail = req.body.detail;
+                value.status = status;
+    
+            }
         });
-
+        res.send("Se cambio la tarea");
 
     } else {
-        tas.push(req.body);
-        tasks.find(function(pos,index) {
-        pos.title = req.body.title;
-        pos.detail = req.body.detail;
-        res.send("Se cambio la tarea");
-            
+        tasks.forEach(function(value,index,array){
+            if(value.id==idTask){
+                value.title = req.body.title;
+                value.detail = req.body.detail;
+            }
         });
+        res.send("Se cambio la tarea");
     }
 });
 
 
 app.delete('/tasks/:taskId', function (req, res) {
-    var idTask = parseInt(req.params.idTask);
-    tasks.splice( idTask-1, 1 );
+    var idTask = parseInt(req.params.taskId);
+    tasks.forEach(function(value,index,array){
+        if(value.id==idTask){
+            tasks.splice(index,1);
+        }
+    });
     res.send("Se elimino la tarea");
 });
 
